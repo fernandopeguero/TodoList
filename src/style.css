@@ -22,7 +22,22 @@ html {
     height: auto;
   }
 
+
+
+:root {
+
+  /* Color palette */
+  --color-darker: #100c25;
+  --color-dark: #1B1833;
+  --color-purple: #441752;
+  --color-apple: #AB4459;
+  --color-orange: #F29F58; 
+
+  /*  */
+}
+
+
 body {
-    background-color: tomato;
+    background-color: var(--color-darker);
     color: white;
 }
