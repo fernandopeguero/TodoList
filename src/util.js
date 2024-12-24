@@ -6,17 +6,20 @@ export function childAppender(parent, ...childs) {
 
 }
 
-export function createListItem(text){
+
+
+export function createListItem(text, callback){
 
     const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = "#";
-    a.addEventListener('click' , (e) => {
-        e.preventDefault();
-    })
-    a.textContent = text;
 
-    li.appendChild(a);
+    const p = document.createElement('p');
+    const icon = document.createElement('img');
+
+    li.textContent = text;
+
+    li.addEventListener('click', callback);
+
+    childAppender(li, icon, p);
 
     return li;
 
