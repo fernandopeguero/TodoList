@@ -8,14 +8,14 @@ export function childAppender(parent, ...childs) {
 
 
 
-export function createListItem(text, callback){
+export function createListItem(img = "", text, callback){
 
     const li = document.createElement('li');
 
-    const p = document.createElement('p');
+    const p = document.createElement('span');
+    p.textContent = text;
     const icon = document.createElement('img');
-
-    li.textContent = text;
+    icon.src = img
 
     li.addEventListener('click', callback);
 
