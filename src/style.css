@@ -32,12 +32,65 @@ html {
   --color-purple: #441752;
   --color-apple: #AB4459;
   --color-orange: #F29F58; 
+  --color-white: #FFFDEC;
 
-  /*  */
+  /* padding */
+  --pd-small: 8px;
+  --pd-medium: 16px;
+  --pd-large: 24px;
+  --pd-extra-large: 26px;
 }
 
 
 body {
     background-color: var(--color-darker);
-    color: white;
+    color: var(--color-white);
+    height: 100vh;
+}
+
+.sidebar {
+  padding: 16px;
+  background-color: var(--color-dark);
+  height: 100%;
+  max-width: 350px;
+
+  .profile_container {
+    display: flex;
+    align-items: center ;
+    gap: 36px;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+    }
+
+    img {
+      background-color: var(--color-white);
+      height: auto;
+      width: 30px;
+      border-radius: 50%;
+    }
+  
+    i{
+      background-color: var(--color-white);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+  }
+
+  ul {
+
+    line-height: 2;
+    margin-top: var(--pd-medium);
+    margin-bottom: var(--pd-medium);
+
+    li {
+      cursor: pointer;
+      font-weight: 600;
+    }
+  }
+  
 }
