@@ -30,6 +30,7 @@ export function createUserToolBar(user = {name: "fernando"}) {
 
     childAppender(userContainer, profilePhoto, name, dropDownIcon);
     const actionsContainer = document.createElement("div");
+    actionsContainer.classList.add("notifications_container");
 
     const notifications = document.createElement("img");
     notifications.src = bellIcon;
