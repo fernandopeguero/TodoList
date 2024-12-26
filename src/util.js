@@ -1,5 +1,42 @@
 
 
+export function createProjects() {
+    
+    const projects = [
+
+    ]
+
+
+
+    function removeProject(obj) {
+
+        projects = this.filter(current => current != obj);
+    }
+
+
+    function completeProject(obj) {
+        obj.completed = true;
+    }
+
+
+    return {
+        projects,
+        removeProject,
+        completeProject
+    }
+}
+
+export const projects = {
+    inbox: {},
+    search: {},
+    upcoming: {},
+    projects: {
+        
+    }
+}
+
+
+
 export function childAppender(parent, ...childs) {
 
     childs.forEach(child => parent.appendChild(child));
