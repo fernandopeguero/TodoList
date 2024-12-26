@@ -1,11 +1,9 @@
 
 import trashIcon from "./Resources/svg/trash.svg";
 
-export let currentSection = "inbox";
+export function createProjects() 
+{
 
-
-export function createProjects() {
-    
     const projects = [
             {
               name: "Finish App",
@@ -41,63 +39,100 @@ export function createProjects() {
     ]
 
 
-
-
-
     function removeProject(obj) {
 
         projects = this.filter(current => current != obj);
     }
 
-
-    function completeProject(obj) {
-        obj.completed = true;
-    }
-
-
     function getProjects() {
-
-        return Object.assign(projects);
+        return Object.assign(projects)
     }
 
-    function getInboxTask() {
-
-        return projects.filter(task => task.section === "inbox")
+    function addToProjectList(project){
+        projects.push(project);
     }
-
-    function displayTask() {
-
-        const filteredList = projects.filter(todo => todo.section === currentSection);
-
-        const elements = []
-        
-        for(const todo of filteredList){
-            elements.push(createTodo(todo));
-        }
-
-
-        return elements;
-    }
-
 
 
     return {
-        getProjects,
         removeProject,
-        completeProject,
-        getInboxTask,
-        displayTask
+        addToProjectList,
+        getProjects
+        
 
     }
 }
 
-export const projects = {
-    inbox: {},
-    search: {},
-    upcoming: {},
-    projects: {
-        
+
+export function createProjectController() {
+
+
+    const projectsActions = createProjects();
+
+    const projects = filterProject("inbox");
+
+    function filterProject(currentSection = "inbox") {
+
+        const currentProjects = projects.filter(todo => todo.section === currentSection);
+
+        return currentProjects;
     }
+
+
+    function completeProject(obj) {
+        
+        obj.completed = true;
+
+    }
+
+
+    
+
+    return {
+        filterProject,
+        completeProject,
+    
+
+    }
+
+
+}
+
+
+export  function screenController () {
+
+    
+        const projectsController = createProjectController();
+
+        let projects = projectsController.filterProject('inbox');
+
+        function displayCurrentTodo(pj) {
+
+            const list = [];
+
+            for(const item of pj){
+                list.push(createTodo(item));
+            }
+
+            return todos;
+
+
+        }
+
+
+        function clickHandler(e) {
+
+            console.log(e.target.name);
+
+        }
+
+
+
+        return {
+            displayCurrentTodo
+        }
+
+
+
 }
 
 
