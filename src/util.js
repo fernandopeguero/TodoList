@@ -1,9 +1,12 @@
 
+import trashIcon from "./Resources/svg/trash.svg";
+
+export let currentSection = "inbox";
+
 
 export function createProjects() {
     
     const projects = [
-        [
             {
               name: "Finish App",
               section: "inbox",
@@ -34,7 +37,7 @@ export function createProjects() {
               completed: false,
               date: new Date("2024-07-01")
             }
-          ]
+          
     ]
 
 
@@ -62,11 +65,29 @@ export function createProjects() {
         return projects.filter(task => task.section === "inbox")
     }
 
+    function displayTask() {
+
+        const filteredList = projects.filter(todo => todo.section === currentSection);
+
+        const elements = []
+        
+        for(const todo of filteredList){
+            elements.push(createTodo(todo));
+        }
+
+
+        return elements;
+    }
+
+
 
     return {
         getProjects,
         removeProject,
-        completeProject
+        completeProject,
+        getInboxTask,
+        displayTask
+
     }
 }
 
@@ -107,7 +128,7 @@ export function createListItem(img = "", text, callback){
 
 }
 
-export function createTodo(obj) {
+export function createTodo(obj, deleteObject) {
 
     const container = document.createElement("li");
     container.classList.add("todo");
@@ -119,6 +140,14 @@ export function createTodo(obj) {
 
     const text = document.createElement("p");
     text.textContent = obj.name;
+
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = trashIcon;
+    deleteIcon.addEventListener("click", () => {deleteObject(obj)});
+
+    childAppender(container, radioButton, text, deleteIcon);
+
+    return container;
 
 
 }
