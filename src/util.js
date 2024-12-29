@@ -1,6 +1,23 @@
 
 import trashIcon from "./Resources/svg/trash.svg";
 
+//  user profile icons 
+import upArrowIcon from "./Resources/svg/up_arrow.svg";
+import dropDownIcon from "./Resources/svg/down_arrow.svg";
+import bellIcon from "./Resources/svg/bell.svg";
+import dashIcon from "./Resources/svg/dashboard.svg";
+import userIcon from "./Resources/svg/user.svg";
+
+// side menu icons 
+import plusIcon from "./Resources/svg/plus.svg";
+import inboxIcon from "./Resources/svg/inbox.svg";
+import searchIcon from "./Resources/svg/search.svg";
+import todayIcon from "./Resources/svg/today.svg";
+import upcomingIcon from "./Resources/svg/upcoming.svg";
+
+// projects icons
+
+
 export function createProjects() 
 {
 
@@ -67,8 +84,9 @@ export function createProjectController() {
 
 
     const projectsActions = createProjects();
+    let projects = [];
 
-    const projects = filterProject("inbox");
+    projects = filterProject("inbox");
 
     function filterProject(currentSection = "inbox") {
 
@@ -128,8 +146,8 @@ export  function screenController () {
             const list = document.createElement("ul");
             list.classList.add("options");
             
-            const addTask = createListItem(plusIcon, "Add task", () => { console.log("Adding a task to selected option")})
-            const search = createListItem( searchIcon, "Search", () => { console.log("Searching for task.")});
+            const addTask = createListItem(plusIcon, "Add task", () => { sideMenuClickhandler("Adding a task to selected option")})
+            const search = createListItem( searchIcon, "Search", () => { console.log()});
             const inbox = createListItem(inboxIcon, "Inbox", () => { callback( setCurrentSection("inbox"))});
             const today = createListItem(todayIcon, "Today", () => { callback(setCurrentSection("today"))})
             const upcoming = createListItem(upcomingIcon, "Upcoming", () => { callback(setCurrentSection("upcoming"))})
@@ -157,16 +175,94 @@ export  function screenController () {
             return container;
         }
 
-        function sideMenuClickhandler(e) {
+        function sidebar () {
 
-            console.log(e.target.name);
+            const container = document.createElement("aside");
+            container.classList.add("sidebar");
+        
+
+            const userProfile = createUserToolBar();
+            const options = createSideMenu();
+            const projects = createProjectList();
+            
+            childAppender(container, userProfile, options, projects);
+                
+            return container;
+        }
+
+        function createUserToolBar(user = {name: "fernando"}) {
+        
+        
+            const container = document.createElement("article");
+            container.classList.add("profile_container");
+        
+        
+            const userContainer = document.createElement("div");
+        
+            const profilePhoto = document.createElement("img");
+            profilePhoto.classList.add("profile_img");
+            profilePhoto.src = userIcon;
+            profilePhoto.height = 30;
+            profilePhoto.width = 30;
+        
+            const name = document.createElement("p");
+            name.textContent = user.name;
+        
+            const dropDownIcon = document.createElement("img");
+            dropDownIcon.src = upArrowIcon;
+        
+            childAppender(userContainer, profilePhoto, name, dropDownIcon);
+            const actionsContainer = document.createElement("div");
+            actionsContainer.classList.add("notifications_container");
+        
+            const notifications = document.createElement("img");
+            notifications.src = bellIcon;
+            notifications.classList.add("bell");
+        
+            const hideSideBar = document.createElement("img");
+            hideSideBar.classList.add("dash")
+            hideSideBar.src = dashIcon;
+        
+            childAppender(actionsContainer, notifications, hideSideBar)
+        
+            childAppender(container, userContainer, actionsContainer);
+        
+            return container;
+        }
+
+
+        function content() {
+
+            const container = document.createElement("section");
+            container.classList.add("content");
+        
+            const todos = projects;
+        
+            childAppender(container, ...todos)
+            
+            return container;
+        
+        }
+
+
+        function createApp() {
+
+            childAppender(body, sidebar(), content());
+
+        
+        }
+
+        function sideMenuClickhandler(message) {
+
+            console.log(message);
 
         }
 
 
 
         return {
-            displayCurrentTodo
+            displayCurrentTodo,
+            createApp
         }
 
 
