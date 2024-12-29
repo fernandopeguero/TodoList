@@ -100,6 +100,11 @@ export function createProjectController() {
 
 export  function screenController () {
 
+
+    const body = document.querySelector("body");
+
+    const sidebarButtons = ["Add Task", "Search", "Inbox", "Today", "Upcoming"];
+
     
         const projectsController = createProjectController();
 
@@ -118,8 +123,41 @@ export  function screenController () {
 
         }
 
+        function createSideMenu () {
 
-        function clickHandler(e) {
+            const list = document.createElement("ul");
+            list.classList.add("options");
+            
+            const addTask = createListItem(plusIcon, "Add task", () => { console.log("Adding a task to selected option")})
+            const search = createListItem( searchIcon, "Search", () => { console.log("Searching for task.")});
+            const inbox = createListItem(inboxIcon, "Inbox", () => { callback( setCurrentSection("inbox"))});
+            const today = createListItem(todayIcon, "Today", () => { callback(setCurrentSection("today"))})
+            const upcoming = createListItem(upcomingIcon, "Upcoming", () => { callback(setCurrentSection("upcoming"))})
+
+
+            childAppender(list, addTask, search, inbox, today, upcoming);
+
+            return list;
+            
+        }
+
+
+        function createProjectList( ){
+
+            const container = document.createElement("div");
+        
+            const title = document.createElement("h3");
+            title.textContent = "My Projects";
+        
+            const projectsList = document.createElement("ul");
+            projectsList.classList.add("project_list");
+        
+            childAppender(container, title, projectsList);
+        
+            return container;
+        }
+
+        function sideMenuClickhandler(e) {
 
             console.log(e.target.name);
 
@@ -148,6 +186,7 @@ export function childAppender(parent, ...childs) {
 export function createListItem(img = "", text, callback){
 
     const li = document.createElement('li');
+    li.name = text;
 
     const p = document.createElement('span');
     p.textContent = text;
