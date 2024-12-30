@@ -95,7 +95,7 @@ export function createProjectController() {
 
     function completeProject(obj) {
         
-        obj.completed = true;
+        obj.completed = !obj.completed;
 
     }
 
@@ -274,9 +274,16 @@ export  function screenController () {
             const container = document.createElement("li");
             container.classList.add("todo");
         
-            const radioButton = document.createElement("input");
-            radioButton.type = "radio";
-            radioButton.name = obj.section
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = false;
+
+            checkbox.addEventListener('click', function (e) {
+                    console.log(e.target)
+                    console.log(projects)
+
+                    projectsController.completeProject(obj);
+            })
         
         
             const text = document.createElement("p");
@@ -289,7 +296,7 @@ export  function screenController () {
                 resetContent();
             });
         
-            childAppender(container, radioButton, text, deleteIcon);
+            childAppender(container, checkbox, text, deleteIcon);
         
             return container;
         
