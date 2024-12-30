@@ -21,7 +21,7 @@ import upcomingIcon from "./Resources/svg/upcoming.svg";
 export function createProjects() 
 {
 
-    const projects = [
+    let projects = [
             {
               name: "Finish App",
               section: "inbox",
@@ -58,11 +58,11 @@ export function createProjects()
 
     function removeProject(obj) {
 
-        projects = this.filter(current => current != obj);
+        projects = projects.filter(current => current != obj);
     }
 
     function getProjects() {
-        return Object.assign(projects)
+        return projects;
     }
 
     function addToProjectList(project){
@@ -84,13 +84,10 @@ export function createProjectController() {
 
 
     const projectsActions = createProjects();
-    let projects = [];
-
-    projects = filterProject("inbox");
 
     function filterProject(currentSection = "inbox") {
 
-        const currentProjects = projects.filter(todo => todo.section === currentSection);
+        const currentProjects = projectsActions.getProjects().filter(todo => todo.section === currentSection);
 
         return currentProjects;
     }
@@ -108,6 +105,7 @@ export function createProjectController() {
     return {
         filterProject,
         completeProject,
+        removeTodo: projectsActions.removeProject
     
 
     }
@@ -123,10 +121,9 @@ export  function screenController () {
 
     const sidebarButtons = ["Add Task", "Search", "Inbox", "Today", "Upcoming"];
 
-    
-        const projectsController = createProjectController();
+    const projectsController = createProjectController();
 
-        let projects = projectsController.filterProject('inbox');
+    let projects = projectsController.filterProject('inbox');
 
         function displayCurrentTodo(pj) {
 
@@ -146,11 +143,11 @@ export  function screenController () {
             const list = document.createElement("ul");
             list.classList.add("options");
             
-            const addTask = createListItem(plusIcon, "Add task", () => { sideMenuClickhandler("Adding a task to selected option")})
-            const search = createListItem( searchIcon, "Search", () => { console.log()});
-            const inbox = createListItem(inboxIcon, "Inbox", () => { callback( setCurrentSection("inbox"))});
-            const today = createListItem(todayIcon, "Today", () => { callback(setCurrentSection("today"))})
-            const upcoming = createListItem(upcomingIcon, "Upcoming", () => { callback(setCurrentSection("upcoming"))})
+            const addTask = createListItem(plusIcon, "Add task", () => { console.log("Adding task")})
+            const search = createListItem( searchIcon, "Search", () => { console.log("Searching for todos ")});
+            const inbox = createListItem(inboxIcon, "Inbox", () => { sideMenuClickhandler("inbox")});
+            const today = createListItem(todayIcon, "Today", () => {  sideMenuClickhandler("today")})
+            const upcoming = createListItem(upcomingIcon, "Upcoming", () => { sideMenuClickhandler("upcoming")})
 
 
             childAppender(list, addTask, search, inbox, today, upcoming);
@@ -236,7 +233,11 @@ export  function screenController () {
             const container = document.createElement("section");
             container.classList.add("content");
         
-            const todos = projects;
+            const todos = [];
+
+            for(const todo of projects) {
+                todos.push(createTodo(todo, projectsController.removeTodo));
+            }
         
             childAppender(container, ...todos)
             
@@ -247,16 +248,91 @@ export  function screenController () {
 
         function createApp() {
 
+            body.textContent = "";
             childAppender(body, sidebar(), content());
 
         
         }
 
-        function sideMenuClickhandler(message) {
+        function sideMenuClickhandler(section) {
 
-            console.log(message);
+            switch(section){
+                case "inbox":
+                    filterProjects(section);
+                    break;
+                case "today":
+                    filterProjects(section);
+                    break;
+                case "upcoming":
+                    filterProjects(section);
+                    break;
+                    
+            }
 
         }
+
+
+        function filterProjects(filter) {
+
+            projects = projectsController.filterProject(filter);
+            createApp();
+        }
+
+        function createTodo(obj, deleteObject) {
+
+            const container = document.createElement("li");
+            container.classList.add("todo");
+        
+            const radioButton = document.createElement("input");
+            radioButton.type = "radio";
+            radioButton.name = obj.section
+        
+        
+            const text = document.createElement("p");
+            text.textContent = obj.name;
+        
+            const deleteIcon = document.createElement("img");
+            deleteIcon.src = trashIcon;
+            deleteIcon.addEventListener("click", () => {
+                deleteObject(obj)
+                createApp();
+            });
+        
+            childAppender(container, radioButton, text, deleteIcon);
+        
+            return container;
+        
+        
+        }
+
+
+        function createListItem(img = "", text, callback){
+
+            const li = document.createElement('li');
+            li.name = text;
+        
+            const p = document.createElement('span');
+            p.textContent = text;
+            const icon = document.createElement('img');
+            icon.src = img
+        
+            li.addEventListener('click', callback);
+        
+            childAppender(li, icon, p);
+        
+            return li;
+        
+        
+        }
+
+
+        function childAppender(parent, ...childs) {
+
+            childs.forEach(child => parent.appendChild(child));
+        
+        }
+        
+        
 
 
 
@@ -265,59 +341,6 @@ export  function screenController () {
             createApp
         }
 
-
-
-}
-
-
-
-export function childAppender(parent, ...childs) {
-
-    childs.forEach(child => parent.appendChild(child));
-
-}
-
-
-
-export function createListItem(img = "", text, callback){
-
-    const li = document.createElement('li');
-    li.name = text;
-
-    const p = document.createElement('span');
-    p.textContent = text;
-    const icon = document.createElement('img');
-    icon.src = img
-
-    li.addEventListener('click', callback);
-
-    childAppender(li, icon, p);
-
-    return li;
-
-
-}
-
-export function createTodo(obj, deleteObject) {
-
-    const container = document.createElement("li");
-    container.classList.add("todo");
-
-    const radioButton = document.createElement("input");
-    radioButton.type = "radio";
-    radioButton.name = obj.section
-
-
-    const text = document.createElement("p");
-    text.textContent = obj.name;
-
-    const deleteIcon = document.createElement("img");
-    deleteIcon.src = trashIcon;
-    deleteIcon.addEventListener("click", () => {deleteObject(obj)});
-
-    childAppender(container, radioButton, text, deleteIcon);
-
-    return container;
 
 
 }
