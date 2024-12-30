@@ -232,14 +232,38 @@ export  function screenController () {
 
             const container = document.createElement("section");
             container.classList.add("content");
+
+            const todoSection = document.createElement("section");
+            todoSection.classList.add("todo_section");
+
+            const todoTitle = document.createElement("h2");
+            todoTitle.textContent = "Task";
+
+            todoSection.appendChild(todoTitle);
+
+            const completedTodo = document.createElement("section");
+            completedTodo.classList.add("completed_todo");
+
+            const completeTodoTitle = document.createElement("h2");
+            completeTodoTitle.textContent = "Completed";
+
+            completedTodo.appendChild(completeTodoTitle);
         
             const todos = [];
 
             for(const todo of projects) {
-                todos.push(createTodo(todo, projectsController.removeTodo));
+
+                const current = createTodo(todo, projectsController.removeTodo)
+
+                if(!todo.completed) {
+                    todoSection.appendChild(current)
+                } else {
+                    completedTodo.appendChild(current)
+                }
+                
             }
         
-            childAppender(container, ...todos)
+            childAppender(container, todoSection, completedTodo);
             
             return container;
         
@@ -279,8 +303,6 @@ export  function screenController () {
             checkbox.checked = false;
 
             checkbox.addEventListener('click', function (e) {
-                    console.log(e.target)
-                    console.log(projects)
 
                     projectsController.completeProject(obj);
             })
