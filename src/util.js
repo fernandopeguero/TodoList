@@ -231,7 +231,10 @@ export  function screenController () {
         function content() {
 
             const container = document.createElement("section");
-            container.classList.add("content");
+            container.classList.add("content_section");
+
+            const todosContainer = document.createElement("section");
+            todosContainer.classList.add("todos_container");
 
             const todoSection = document.createElement("section");
             todoSection.classList.add("todo_section");
@@ -248,9 +251,7 @@ export  function screenController () {
             completeTodoTitle.textContent = "Completed";
 
             completedTodo.appendChild(completeTodoTitle);
-        
-            const todos = [];
-
+    
             for(const todo of projects) {
 
                 const current = createTodo(todo, projectsController.removeTodo)
@@ -263,7 +264,8 @@ export  function screenController () {
                 
             }
         
-            childAppender(container, todoSection, completedTodo);
+            childAppender(todosContainer, todoSection, completedTodo);
+            childAppender(container, todosContainer);
             
             return container;
         
@@ -305,6 +307,7 @@ export  function screenController () {
             checkbox.addEventListener('click', function (e) {
 
                     projectsController.completeProject(obj);
+                    resetContent();
             })
         
         
