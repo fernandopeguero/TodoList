@@ -233,6 +233,9 @@ export  function screenController () {
             const container = document.createElement("section");
             container.classList.add("content_section");
 
+            const sectionTitle = document.createElement("h1");
+            sectionTitle.textContent = currentSection;
+
             const todosContainer = document.createElement("section");
             todosContainer.classList.add("todos_container");
 
@@ -265,7 +268,7 @@ export  function screenController () {
             }
         
             childAppender(todosContainer, todoSection, completedTodo);
-            childAppender(container, todosContainer);
+            childAppender(container, sectionTitle, todosContainer);
             
             return container;
         
