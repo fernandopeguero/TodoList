@@ -119,11 +119,11 @@ export  function screenController () {
 
     const body = document.querySelector("body");
 
-    const sidebarButtons = ["Add Task", "Search", "Inbox", "Today", "Upcoming"];
+    let currentSection = "inbox";
 
     const projectsController = createProjectController();
 
-    let projects = projectsController.filterProject('inbox');
+    let projects = projectsController.filterProject(currentSection);
 
         function displayCurrentTodo(pj) {
 
@@ -248,7 +248,7 @@ export  function screenController () {
 
         function createApp() {
 
-            body.textContent = "";
+            body.innerHTML = "";
             childAppender(body, sidebar(), content());
 
         
@@ -256,18 +256,9 @@ export  function screenController () {
 
         function sideMenuClickhandler(section) {
 
-            switch(section){
-                case "inbox":
-                    filterProjects(section);
-                    break;
-                case "today":
-                    filterProjects(section);
-                    break;
-                case "upcoming":
-                    filterProjects(section);
-                    break;
-                    
-            }
+            currentSection = section;
+
+            filterProjects(currentSection);
 
         }
 
@@ -295,7 +286,7 @@ export  function screenController () {
             deleteIcon.src = trashIcon;
             deleteIcon.addEventListener("click", () => {
                 deleteObject(obj)
-                createApp();
+                resetContent();
             });
         
             childAppender(container, radioButton, text, deleteIcon);
@@ -305,6 +296,14 @@ export  function screenController () {
         
         }
 
+
+        function resetContent(){
+
+            projects = projectsController.filterProject(currentSection);
+
+            createApp();
+
+        }
 
         function createListItem(img = "", text, callback){
 
