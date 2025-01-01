@@ -123,6 +123,9 @@ export  function screenController () {
 
     const projectsController = createProjectController();
 
+    /*
+        create object of the current projects sections inbox as default 
+    */
     let projects = projectsController.filterProject(currentSection);
 
         function displayCurrentTodo(pj) {
@@ -138,6 +141,9 @@ export  function screenController () {
 
         }
 
+        /*
+            Create the side menu list and interactions
+        */
         function createSideMenu () {
 
             const list = document.createElement("ul");
@@ -155,6 +161,10 @@ export  function screenController () {
             return list;
             
         }
+
+        /*
+            create title and icons for project section of sidebar 
+        */
 
         function createTitleToolBar(name) {
 
@@ -182,6 +192,9 @@ export  function screenController () {
 
         }
 
+        /*
+            Create the empty list were the project will be house
+        */
 
         function createProjectList( ){
 
@@ -196,6 +209,10 @@ export  function screenController () {
         
             return container;
         }
+
+        /*
+            Create side the entire side menu list item and project items elements
+        */
 
         function sidebar () {
 
@@ -212,6 +229,9 @@ export  function screenController () {
             return container;
         }
 
+        /*
+            Create top user tool bar and interations
+        */
         function createUserToolBar(user = {name: "fernando"}) {
         
         
@@ -252,6 +272,9 @@ export  function screenController () {
             return container;
         }
 
+        /*
+            create content and section for the display of task/completed todos
+        */
 
         function content() {
 
@@ -300,6 +323,7 @@ export  function screenController () {
         }
 
 
+        /* creates the app */
         function createApp() {
 
             body.innerHTML = "";
