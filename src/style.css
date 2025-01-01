@@ -147,4 +147,15 @@ body {
       width: 100%;
     }
   }
+
+
+  .todo_section, .completed_todo {
+    background-color: var(--color-dark);
+    padding: var(--pd-medium);
+    border-radius: var(--pd-small);
+    margin: var(--pd-large) 0;
+    transition: 0.3s;
+
+  }
+
 }
