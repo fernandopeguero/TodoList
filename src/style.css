@@ -132,6 +132,11 @@ body {
     max-width: 800px;
   }
 
+  .completed {
+    text-decoration: line-through;
+  }
+
+
   width: 100%;
   .todo {
     width: 100%;
