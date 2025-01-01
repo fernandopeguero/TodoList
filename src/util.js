@@ -156,13 +156,13 @@ export  function screenController () {
             
         }
 
-        function createProjectTitleToolBar() {
+        function createTitleToolBar(name) {
 
             const container = document.createElement("div");
             container.classList.add("project_toolbar");
 
             const title = document.createElement("h3");
-            title.textContent = "My Projects";
+            title.textContent = name;
 
             const icons = document.createElement("div");
 
@@ -187,7 +187,7 @@ export  function screenController () {
 
             const container = document.createElement("div");
         
-            const title = createProjectTitleToolBar();
+            const title = createTitleToolBar("My Projects")
         
             const projectsList = document.createElement("ul");
             projectsList.classList.add("project_list");
@@ -330,7 +330,7 @@ export  function screenController () {
         
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
-            checkbox.checked = false;
+            checkbox.checked = obj.completed;
 
             checkbox.addEventListener('click', function (e) {
 
@@ -341,6 +341,7 @@ export  function screenController () {
         
             const text = document.createElement("p");
             text.textContent = obj.name;
+            if(obj.completed) text.classList.add("completed");
         
             const deleteIcon = document.createElement("img");
             deleteIcon.src = trashIcon;
