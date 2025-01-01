@@ -3,7 +3,7 @@ import trashIcon from "./Resources/svg/trash.svg";
 
 //  user profile icons 
 import upArrowIcon from "./Resources/svg/up_arrow.svg";
-import dropDownIcon from "./Resources/svg/down_arrow.svg";
+import downArrowIcon from "./Resources/svg/down_arrow.svg";
 import bellIcon from "./Resources/svg/bell.svg";
 import dashIcon from "./Resources/svg/dashboard.svg";
 import userIcon from "./Resources/svg/user.svg";
@@ -156,13 +156,38 @@ export  function screenController () {
             
         }
 
+        function createProjectTitleToolBar() {
+
+            const container = document.createElement("div");
+            container.classList.add("project_toolbar");
+
+            const title = document.createElement("h3");
+            title.textContent = "My Projects";
+
+            const icons = document.createElement("div");
+
+            const addIcon = document.createElement("img");
+            addIcon.src = plusIcon;
+
+            const dropDownIcon = document.createElement("img");
+            dropDownIcon.src = downArrowIcon;
+
+            childAppender(icons, addIcon, dropDownIcon);
+
+            childAppender(container, title, icons);
+
+           return container;
+
+
+
+        }
+
 
         function createProjectList( ){
 
             const container = document.createElement("div");
         
-            const title = document.createElement("h3");
-            title.textContent = "My Projects";
+            const title = createProjectTitleToolBar();
         
             const projectsList = document.createElement("ul");
             projectsList.classList.add("project_list");
