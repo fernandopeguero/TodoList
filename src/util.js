@@ -180,7 +180,9 @@ export  function screenController () {
 
             
             addIcon.addEventListener("click", function (){
-                console.log("Launching Modal")
+                const modal = document.querySelector(".project_modal");
+
+                modal.style.visibility = !modal.style.visibility ;  
             })
 
             const dropDownIcon = document.createElement("img");
@@ -202,6 +204,37 @@ export  function screenController () {
            return container;
 
 
+
+        }
+
+        /*
+            Create modal for project creation 
+        */
+
+        function createProjectModal() {
+
+
+            const container = document.createElement("section");
+            container.classList.add("project_modal");
+
+            const card = document.createElement("div");
+            card.classList.add("project_card");
+
+            const label = document.createElement("h3");
+            label.textContent = "Project Name"
+
+            const projectName = document.createElement("input");
+            projectName.type = "text";
+
+            const addButton = document.createElement("button");
+            addButton.classList.add("add_button_modal");
+            addButton.textContent = "Add Project";
+
+            childAppender(card, label, projectName, addButton);
+
+            childAppender(container, card);
+
+            return container;
 
         }
 
@@ -340,7 +373,7 @@ export  function screenController () {
         function createApp() {
 
             body.innerHTML = "";
-            childAppender(body, sidebar(), content());
+            childAppender(body, sidebar(), content(), createProjectModal());
 
         
         }
