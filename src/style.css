@@ -172,12 +172,13 @@ body {
 
 
 .project_modal {
+  visibility: hidden;
   position: absolute;;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba( 10,  10, 10, .3);  
+  background-color: rgba( 10,  10, 10, .8);  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,16 +213,18 @@ body {
       background-color: var(--color-apple);
       color: var(--color-white);
       font-weight: bold;
-      transition: 0.3s;
+      
     }
 
     button:hover {
+      transition: 0.3s;
       cursor: pointer;
       background-color: var(--color-purple);
       border: solid 2px var(--color-orange);
     }
 
     button:active {
+      transition: 0.3s;
       background-color: var(--color-orange);
     }
 
