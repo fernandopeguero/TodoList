@@ -16,7 +16,7 @@ import todayIcon from "./Resources/svg/today.svg";
 import upcomingIcon from "./Resources/svg/upcoming.svg";
 
 // projects icons
-
+import projectIcon from "./Resources/svg/project.svg";
 
 export function createProjects() 
 {
@@ -177,12 +177,11 @@ export  function screenController () {
 
             const addIcon = document.createElement("img");
             addIcon.src = plusIcon;
-
             
             addIcon.addEventListener("click", function (){
                 const modal = document.querySelector(".project_modal");
 
-                modal.style.visibility = !modal.style.visibility ;  
+                modal.style.visibility = "visible";  
             })
 
             const dropDownIcon = document.createElement("img");
@@ -225,10 +224,26 @@ export  function screenController () {
 
             const projectName = document.createElement("input");
             projectName.type = "text";
+            projectName.name = "project";
+            projectName.id = "project";
 
             const addButton = document.createElement("button");
             addButton.classList.add("add_button_modal");
+            addButton.type = "button";
             addButton.textContent = "Add Project";
+
+            addButton.addEventListener("click", function (event) {
+                
+                const text = projectName.value.trim();
+                const projectList = document.querySelector(".project_list");
+
+                if(text.length > 3) {
+                    const project = createListItem(projectIcon, text , () => { console.log("Adding Project")});
+
+                    projectList.appendChild(project);
+                    container.style.visibility = "hidden";
+                } 
+            });
 
             childAppender(card, label, projectName, addButton);
 
@@ -375,7 +390,6 @@ export  function screenController () {
             body.innerHTML = "";
             childAppender(body, sidebar(), content(), createProjectModal());
 
-        
         }
 
         function sideMenuClickhandler(section) {
