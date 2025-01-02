@@ -55,7 +55,6 @@ export function createProjects()
           
     ]
 
-
     function removeProject(obj) {
 
         projects = projects.filter(current => current != obj);
@@ -179,8 +178,22 @@ export  function screenController () {
             const addIcon = document.createElement("img");
             addIcon.src = plusIcon;
 
+            
+            addIcon.addEventListener("click", function (){
+                console.log("Launching Modal")
+            })
+
             const dropDownIcon = document.createElement("img");
             dropDownIcon.src = downArrowIcon;
+
+            dropDownIcon.addEventListener("click" , function () {
+                if(dropDownIcon.src === downArrowIcon)  {
+                    dropDownIcon.src = upArrowIcon;
+                } else {
+                    dropDownIcon.src = downArrowIcon;
+                }
+
+            })
 
             childAppender(icons, addIcon, dropDownIcon);
 
@@ -416,10 +429,7 @@ export  function screenController () {
         
         }
         
-        
-
-
-
+    
         return {
             displayCurrentTodo,
             createApp
