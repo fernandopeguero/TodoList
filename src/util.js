@@ -75,10 +75,9 @@ function createTasks()
 
     return {
         removeTask,
-        addToProjectList: addToTasksList,
-        getProjects: getTasks
-        
-
+        addToTasksList,
+        getTasks
+    
     }
 }
 
@@ -90,7 +89,7 @@ function createTasksController() {
 
     function filterTasks(currentSection = "inbox") {
 
-        const currentTasks = tasksActions.getProjects().filter(todo => todo.section === currentSection);
+        const currentTasks = tasksActions.getTasks().filter(todo => todo.section === currentSection);
 
         return currentTasks;
     }
@@ -170,6 +169,11 @@ export  function screenController () {
         }
 
         /* Add new task*/
+
+        function createNewTask(task) {
+
+
+        }
 
         function addTodo() {
 
