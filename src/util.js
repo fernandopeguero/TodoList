@@ -229,7 +229,7 @@ export  function screenController () {
 
             const addButton = document.createElement("button");
             addButton.classList.add("add_button_modal");
-            addButton.type = "button";
+            addButton.type = "button";``
             addButton.textContent = "Add Project";
 
             addButton.addEventListener("click", function (event) {
@@ -337,10 +337,12 @@ export  function screenController () {
             create content and section for the display of task/completed todos
         */
 
-        function content() {
 
-            const container = document.createElement("section");
-            container.classList.add("content_section");
+
+        function displayContent() {
+
+            const container = document.querySelector(".content_section");
+            container.textContent = "";
 
             const sectionTitle = document.createElement("h1");
             sectionTitle.textContent = currentSection;
@@ -388,7 +390,14 @@ export  function screenController () {
         function createApp() {
 
             body.innerHTML = "";
-            childAppender(body, sidebar(), content(), createProjectModal());
+
+            const content = document.createElement("section");
+            content.classList.add("content_section");
+
+            
+
+            childAppender(body, sidebar(), content, createProjectModal());
+            displayContent();
 
         }
 
@@ -398,13 +407,15 @@ export  function screenController () {
 
             filterProjects(currentSection);
 
+            displayContent();
+
         }
 
 
         function filterProjects(filter) {
 
             projects = projectsController.filterProject(filter);
-            createApp();
+            
         }
 
         function createTodo(obj, deleteObject) {
