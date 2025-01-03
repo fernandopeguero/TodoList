@@ -161,6 +161,8 @@ export  function screenController () {
             
         }
 
+        /**/
+
         /*
             create title and icons for project section of sidebar 
         */
@@ -241,7 +243,9 @@ export  function screenController () {
                     const project = createListItem(projectIcon, text , () => { console.log("Adding Project")});
 
                     projectList.appendChild(project);
+                    filterProjects(text);
                     container.style.visibility = "hidden";
+                    displayContent();
                 } 
             });
 
@@ -385,22 +389,6 @@ export  function screenController () {
         
         }
 
-
-        /* creates the app */
-        function createApp() {
-
-            body.innerHTML = "";
-
-            const content = document.createElement("section");
-            content.classList.add("content_section");
-
-            
-
-            childAppender(body, sidebar(), content, createProjectModal());
-            displayContent();
-
-        }
-
         function sideMenuClickhandler(section) {
 
             currentSection = section;
@@ -467,8 +455,6 @@ export  function screenController () {
             childAppender(li, icon, p);
         
             return li;
-        
-        
         }
 
 
@@ -477,6 +463,16 @@ export  function screenController () {
             childs.forEach(child => parent.appendChild(child));
         
         }
+
+    /* creates the app */
+    function createApp() {
+        body.innerHTML = "";
+        const content = document.createElement("section");
+        content.classList.add("content_section");
+        
+        childAppender(body, sidebar(), content, createProjectModal());
+        displayContent();
+    }
         
     
         return {
