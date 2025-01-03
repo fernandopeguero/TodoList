@@ -430,7 +430,7 @@ export  function screenController () {
             checkbox.addEventListener('click', function (e) {
 
                     projectsController.completeProject(obj);
-                    resetContent();
+                    displayContent();
             })
         
         
@@ -442,7 +442,7 @@ export  function screenController () {
             deleteIcon.src = trashIcon;
             deleteIcon.addEventListener("click", () => {
                 deleteObject(obj)
-                resetContent();
+                displayContent();
             });
         
             childAppender(container, checkbox, text, deleteIcon);
@@ -450,15 +450,6 @@ export  function screenController () {
             return container;
         
         
-        }
-
-
-        function resetContent(){
-
-            projects = projectsController.filterProject(currentSection);
-
-            createApp();
-
         }
 
         function createListItem(img = "", text, callback){
