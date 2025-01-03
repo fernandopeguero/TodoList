@@ -18,10 +18,10 @@ import upcomingIcon from "./Resources/svg/upcoming.svg";
 // projects icons
 import projectIcon from "./Resources/svg/project.svg";
 
-export function createProjects() 
+function createTasks() 
 {
 
-    let projects = [
+    let tasks = [
             {
               name: "Finish App",
               section: "inbox",
@@ -55,57 +55,65 @@ export function createProjects()
           
     ]
 
-    function removeProject(obj) {
+    function removeTask(obj) {
 
-        projects = projects.filter(current => current != obj);
+        tasks = tasks.filter(current => current != obj);
     }
 
-    function getProjects() {
-        return projects;
+    function getTasks() {
+        return tasks;
     }
 
-    function addToProjectList(project){
-        projects.push(project);
+    function addToTasksList(project){
+        tasks.push(project);
+    }
+
+    function addTask(todo) {
+        tasks.push(todo);
     }
 
 
     return {
-        removeProject,
-        addToProjectList,
-        getProjects
+        removeTask,
+        addToProjectList: addToTasksList,
+        getProjects: getTasks
         
 
     }
 }
 
 
-export function createProjectController() {
+function createTasksController() {
 
 
-    const projectsActions = createProjects();
+    const tasksActions = createTasks();
 
-    function filterProject(currentSection = "inbox") {
+    function filterTasks(currentSection = "inbox") {
 
-        const currentProjects = projectsActions.getProjects().filter(todo => todo.section === currentSection);
+        const currentTasks = tasksActions.getProjects().filter(todo => todo.section === currentSection);
 
-        return currentProjects;
+        return currentTasks;
     }
 
 
-    function completeProject(obj) {
+    function completeTask(obj) {
         
         obj.completed = !obj.completed;
 
+    }
+
+    function deleteTask(obj) {
+
+        tasksActions.removeTask(obj);
     }
 
 
     
 
     return {
-        filterProject,
-        completeProject,
-        removeTodo: projectsActions.removeProject
-    
+        filterTasks,
+        completeProject: completeTask,
+        removeTask: deleteTask
 
     }
 
@@ -120,12 +128,12 @@ export  function screenController () {
 
     let currentSection = "inbox";
 
-    const projectsController = createProjectController();
+    const tasksController = createTasksController();
 
     /*
         create object of the current projects sections inbox as default 
     */
-    let projects = projectsController.filterProject(currentSection);
+    let tasks = tasksController.filterTasks(currentSection);
 
         function displayCurrentTodo(pj) {
 
@@ -161,7 +169,11 @@ export  function screenController () {
             
         }
 
-        /**/
+        /* Add new task*/
+
+        function addTodo() {
+
+        }
 
         /*
             create title and icons for project section of sidebar 
@@ -261,7 +273,7 @@ export  function screenController () {
             Create the empty list were the project will be house
         */
 
-        function createProjectList( ){
+        function createTaskList( ){
 
             const container = document.createElement("div");
         
@@ -287,9 +299,9 @@ export  function screenController () {
 
             const userProfile = createUserToolBar();
             const options = createSideMenu();
-            const projects = createProjectList();
+            const tasks = createTaskList();
             
-            childAppender(container, userProfile, options, projects);
+            childAppender(container, userProfile, options, tasks);
                 
             return container;
         }
@@ -370,9 +382,9 @@ export  function screenController () {
 
             completedTodo.appendChild(completeTodoTitle);
     
-            for(const todo of projects) {
+            for(const todo of tasks) {
 
-                const current = createTodo(todo, projectsController.removeTodo)
+                const current = createTodo(todo, tasksController.removeTask)
 
                 if(!todo.completed) {
                     todoSection.appendChild(current)
@@ -402,7 +414,7 @@ export  function screenController () {
 
         function filterProjects(filter) {
 
-            projects = projectsController.filterProject(filter);
+            tasks = tasksController.filterTasks(filter);
             
         }
 
@@ -417,7 +429,7 @@ export  function screenController () {
 
             checkbox.addEventListener('click', function (e) {
 
-                    projectsController.completeProject(obj);
+                    tasksController.completeProject(obj);
                     displayContent();
             })
         
@@ -429,8 +441,11 @@ export  function screenController () {
             const deleteIcon = document.createElement("img");
             deleteIcon.src = trashIcon;
             deleteIcon.addEventListener("click", () => {
-                deleteObject(obj)
+                debugger;
+                deleteObject(obj, currentSection);
+                tasks = tasksController.filterTasks(currentSection);
                 displayContent();
+
             });
         
             childAppender(container, checkbox, text, deleteIcon);
