@@ -21,6 +21,12 @@ import projectIcon from "./Resources/svg/project.svg";
 function createTasks() 
 {
 
+    const sections = {
+        inbox: "inbox",
+        today: "today",
+        upcoming: "upcoming"
+    }
+
     let tasks = [
             {
               name: "Finish App",
@@ -55,6 +61,7 @@ function createTasks()
           
     ]
 
+
     function removeTask(obj) {
 
         tasks = tasks.filter(current => current != obj);
@@ -72,11 +79,17 @@ function createTasks()
         tasks.push(todo);
     }
 
+    function getSections(){
+
+        return sections;
+    }
+
 
     return {
         removeTask,
         addToTasksList,
-        getTasks
+        getTasks,
+        getSections
     
     }
 }
@@ -111,9 +124,8 @@ function createTasksController() {
 
     return {
         filterTasks,
-        completeProject: completeTask,
-        removeTask: deleteTask
-
+        completeTask,
+        deleteTask
     }
 
 
@@ -388,7 +400,7 @@ export  function screenController () {
     
             for(const todo of tasks) {
 
-                const current = createTodo(todo, tasksController.removeTask)
+                const current = createTodo(todo, tasksController.deleteTask)
 
                 if(!todo.completed) {
                     todoSection.appendChild(current)
@@ -433,7 +445,7 @@ export  function screenController () {
 
             checkbox.addEventListener('click', function (e) {
 
-                    tasksController.completeProject(obj);
+                    tasksController.completeTask(obj);
                     displayContent();
             })
         
