@@ -240,7 +240,14 @@ export  function screenController () {
 
             childAppender(priorities, ...priorityLevels);
 
-            childAppender(card, title, name, sections, priorities)
+            const dueDate = document.createElement("input");
+            dueDate.type = "date";
+
+            const addButton = document.createElement("button");
+            addButton.type = "button";
+            addButton.textContent = "Add Task";
+
+            childAppender(card, title, name, sections, priorities, dueDate, addButton);
 
             childAppender(container, card)
 
@@ -538,6 +545,8 @@ export  function screenController () {
         
         
         }
+
+        /* Creates priority level options */
 
         function createListItem(img = "", text, callback){
 
