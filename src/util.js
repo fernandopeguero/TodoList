@@ -26,35 +26,47 @@ function createTasks()
         today: "today",
         upcoming: "upcoming"
     }
+    
+    const priorityLevels = {
+        "low": 0,
+        "normal": 1,
+        "high": 2,
+        "critial": 3
+    }
 
     let tasks = [
             {
               name: "Finish App",
               section: "inbox",
               completed: false,
+              priority: 0,
               date: new Date("2024-06-26")
             },
             {
               name: "Write Documentation",
               section: "today",
               completed: false,
+              priority: 0,
               date: new Date("2024-06-27")
             },
             {
               name: "Grocery Shopping",
               section: "upcoming",
+              priority: 0,
               completed: false,
               date: new Date("2024-06-28")
             },
             {
               name: "Prepare Presentation",
               section: "today",
+              priority: 0,
               completed: false,
               date: new Date("2024-06-30")
             },
             {
               name: "Call Mom",
               section: "inbox",
+              priority: 0,
               completed: false,
               date: new Date("2024-07-01")
             }
@@ -81,7 +93,12 @@ function createTasks()
 
     function getSections(){
 
-        return sections;
+        return Object.values(sections).map(section => section);
+    }
+
+    function getPrioritylevels() {
+        return priorityLevels
+
     }
 
 
@@ -89,7 +106,8 @@ function createTasks()
         removeTask,
         addToTasksList,
         getTasks,
-        getSections
+        getSections,
+        getPrioritylevels
     
     }
 }
@@ -125,7 +143,9 @@ function createTasksController() {
     return {
         filterTasks,
         completeTask,
-        deleteTask
+        deleteTask,
+        getSections: tasksActions.getSections,
+        getPrioritylevels: tasksActions.getPrioritylevels
     }
 
 
@@ -167,7 +187,12 @@ export  function screenController () {
             const list = document.createElement("ul");
             list.classList.add("options");
             
-            const addTask = createListItem(plusIcon, "Add task", () => { console.log("Adding task")})
+            const addTask = createListItem(plusIcon, "Add task", () => {
+               
+                    const modal = document.querySelector(".task_modal_container");
+    
+                    modal.style.visibility = "visible";  
+            })
             const search = createListItem( searchIcon, "Search", () => { console.log("Searching for todos ")});
             const inbox = createListItem(inboxIcon, "Inbox", () => { sideMenuClickhandler("inbox")});
             const today = createListItem(todayIcon, "Today", () => {  sideMenuClickhandler("today")})
@@ -182,12 +207,56 @@ export  function screenController () {
 
         /* Add new task*/
 
-        function createNewTask(task) {
+        function createTaskModal() {
+            
+            const container = document.createElement("section");
+            container.classList.add("task_modal_container");
 
+            const card = document.createElement("div");
+            card.classList.add("modal_card");
+
+            const title = document.createElement("h3");
+            title.textContent = "Create Task";
+
+
+            const name = document.createElement("input");
+            name.type = "text";
+            name.name = "name"
+            name.id = "name";
+            name.placeholder = "Name";
+
+            const sections = document.createElement("select");
+            
+            const options = tasksController.getSections().map(section => createSelectOption(section, section));
+            childAppender(sections, ...options);
+
+            const priorities = document.createElement("select");
+
+            const priorityLevels = [];
+
+            for (const [key, value] of Object.entries(tasksController.getPrioritylevels())) {
+                priorityLevels.push(createSelectOption(key, value));
+              }
+
+            childAppender(priorities, ...priorityLevels);
+
+            childAppender(card, title, name, sections, priorities)
+
+            childAppender(container, card)
+
+            return container;
 
         }
 
-        function addTodo() {
+        //  helper function to create option 
+
+        function createSelectOption(text, value) {
+
+            const option = document.createElement("option");
+            option.value = value;
+            option.text = text;
+
+            return option;
 
         }
 
@@ -209,7 +278,7 @@ export  function screenController () {
             addIcon.src = plusIcon;
             
             addIcon.addEventListener("click", function (){
-                const modal = document.querySelector(".project_modal");
+                const modal = document.querySelector(".modal_container");
 
                 modal.style.visibility = "visible";  
             })
@@ -244,10 +313,10 @@ export  function screenController () {
 
 
             const container = document.createElement("section");
-            container.classList.add("project_modal");
+            container.classList.add("modal_container");
 
             const card = document.createElement("div");
-            card.classList.add("project_card");
+            card.classList.add("modal_card");
 
             const label = document.createElement("h3");
             label.textContent = "Project Name"
@@ -259,7 +328,7 @@ export  function screenController () {
 
             const addButton = document.createElement("button");
             addButton.classList.add("add_button_modal");
-            addButton.type = "button";``
+            addButton.type = "button";
             addButton.textContent = "Add Project";
 
             addButton.addEventListener("click", function (event) {
@@ -457,7 +526,6 @@ export  function screenController () {
             const deleteIcon = document.createElement("img");
             deleteIcon.src = trashIcon;
             deleteIcon.addEventListener("click", () => {
-                debugger;
                 deleteObject(obj, currentSection);
                 tasks = tasksController.filterTasks(currentSection);
                 displayContent();
@@ -501,7 +569,7 @@ export  function screenController () {
         const content = document.createElement("section");
         content.classList.add("content_section");
         
-        childAppender(body, sidebar(), content, createProjectModal());
+        childAppender(body, sidebar(), content, createProjectModal(), createTaskModal());
         displayContent();
     }
         
