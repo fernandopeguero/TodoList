@@ -170,8 +170,8 @@ body {
 
 }
 
+.task_modal_container, .modal_container {
 
-.project_modal {
   visibility: hidden;
   position: absolute;;
   top: 0;
@@ -183,18 +183,24 @@ body {
   align-items: center;
   justify-content: center;
 
-
-  .project_card {
+  .modal_card {
     width: 250px;
     background-color: var(--color-white);
     color: var(--color-darker);
     padding: var(--pd-medium);
     border-radius: var(--pd-small);
+  }
 
     h3 {
       font-weight: bold;
       padding-bottom: var(--pd-small);
     }
+
+}
+
+
+.modal_container {
+
 
     input, button {
       border: solid 2px var(--color-darker);
@@ -228,5 +234,5 @@ body {
       background-color: var(--color-orange);
     }
 
-  }
+  
 }
