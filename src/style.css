@@ -35,7 +35,12 @@ html {
   --color-white: #FFFDEC;
 
   /* Priority Color */
-  --color-priority-level: #494CA2;
+  --color-priority-low: #494CA2;
+  --color-priority-normal: #6F975C;
+  --color-priority-high: #D2D462;
+  --color-priority-critical: #FF6361;
+  
+  
 
   /* padding */
   --pd-small: 8px;
@@ -141,7 +146,7 @@ body {
 
 
   .todo {
-    background-color: var(--color-priority-level);
+    background-color: var(--color-priority-low);
     margin: var(--pd-small) 0;
     width: 100%;
     display: flex;
