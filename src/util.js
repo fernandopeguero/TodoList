@@ -521,7 +521,7 @@ export  function screenController () {
         
             const text = document.createElement("p");
             text.textContent = obj.name;
-            if(obj.completed) text.classList.add("completed");
+            if(obj.completed) container.classList.add("completed");
         
             const deleteIcon = document.createElement("img");
             deleteIcon.src = trashIcon;
