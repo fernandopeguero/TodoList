@@ -28,10 +28,10 @@ function createTasks()
     }
     
     const priorityLevels = {
-        "low": 0,
-        "normal": 1,
-        "high": 2,
-        "critial": 3
+        low: 0,
+        normal: 1,
+        high: 2,
+        critical: 3
     }
 
     let tasks = [
@@ -101,13 +101,18 @@ function createTasks()
 
     }
 
+    function addSection(section) {
+        sections[section] = section;
+    }
+
 
     return {
         removeTask,
         addToTasksList,
         getTasks,
         getSections,
-        getPrioritylevels
+        getPrioritylevels,
+        addSection
     
     }
 }
@@ -145,7 +150,8 @@ function createTasksController() {
         completeTask,
         deleteTask,
         getSections: tasksActions.getSections,
-        getPrioritylevels: tasksActions.getPrioritylevels
+        getPrioritylevels: tasksActions.getPrioritylevels,
+        addSection: tasksActions.addSection
     }
 
 
@@ -160,6 +166,14 @@ export  function screenController () {
     let currentSection = "inbox";
 
     const tasksController = createTasksController();
+
+    
+    const priorityColor = {
+        low: "#494CA2",
+        normal: "#6F975C",
+        high: "#D2D462",
+        critical: "#FF6361"
+    }
 
     /*
         create object of the current projects sections inbox as default 
@@ -231,11 +245,18 @@ export  function screenController () {
             childAppender(sections, ...options);
 
             const priorities = document.createElement("select");
+            priorities.style.backgroundColor = priorityColor["low"]
+
+            priorities.addEventListener('change', function(e) {
+                console.log(e.target.value)
+                priorities.style.backgroundColor = priorityColor[e.target.value];
+                
+            })
 
             const priorityLevels = [];
 
             for (const [key, value] of Object.entries(tasksController.getPrioritylevels())) {
-                priorityLevels.push(createSelectOption(key, value));
+                priorityLevels.push(createSelectOption(key, key, true));
               }
 
             childAppender(priorities, ...priorityLevels);
@@ -257,11 +278,15 @@ export  function screenController () {
 
         //  helper function to create option 
 
-        function createSelectOption(text, value) {
+        function createSelectOption(text, value, color = false) {
 
             const option = document.createElement("option");
             option.value = value;
             option.text = text;
+
+            if(color) {
+                option.style.backgroundColor = priorityColor[text];
+            } 
 
             return option;
 
@@ -346,6 +371,7 @@ export  function screenController () {
                 if(text.length > 3) {
                     const project = createListItem(projectIcon, text , () => { console.log("Adding Project")});
 
+                    tasksController.addSection(text);
                     projectList.appendChild(project);
                     filterProjects(text);
                     container.style.visibility = "hidden";
@@ -353,6 +379,7 @@ export  function screenController () {
                 } 
             });
 
+            
             childAppender(card, label, projectName, addButton);
 
             childAppender(container, card);
