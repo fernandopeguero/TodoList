@@ -140,6 +140,12 @@ body {
   padding:var(--pd-large);
   width: 100%;
 
+  h1 {
+    font-weight: bolder;
+    text-transform: uppercase;
+    letter-spacing: 1.7px;
+  }
+
   .todos_container {
     margin: 0 auto;
     max-width: 800px;
