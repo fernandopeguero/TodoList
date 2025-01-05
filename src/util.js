@@ -28,10 +28,10 @@ function createTasks()
     }
     
     const priorityLevels = {
-        low: "#494CA2",
-        normal: "#6F975C",
-        high: "#D2D462",
-        critical: "#FF6361"
+        low: "#3E7B27",
+        normal: "#FFD65A",
+        high: "#F26B0F",
+        critical: "#FA4032"
     }
 
     let tasks = [
@@ -256,8 +256,8 @@ export  function screenController () {
             name.type = "text";
             name.name = "name"
             name.id = "name";
-            name.min = 4;
-            name.max = 36;
+            name.minLength = 4;
+            name.maxLength = 36;
             name.placeholder = "Name";
             name.required = true;
 
@@ -605,6 +605,10 @@ export  function screenController () {
 
             const container = document.createElement("li");
             container.classList.add("todo");
+            if(!obj.completed){
+                container.style.backgroundColor = obj.priority
+            }
+            
         
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
