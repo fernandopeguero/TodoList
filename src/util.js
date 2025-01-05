@@ -413,8 +413,16 @@ export  function screenController () {
             const container = document.createElement("section");
             container.classList.add("modal_container");
 
+            container.addEventListener('click', function(e) {
+               this.style.visibility = "hidden";
+            })
+
             const card = document.createElement("div");
             card.classList.add("modal_card");
+
+            card.addEventListener('click', function(e) {
+                e.stopPropagation();
+            })
 
             const label = document.createElement("h3");
             label.textContent = "Project Name"
@@ -437,7 +445,7 @@ export  function screenController () {
 
                 if(text.length > 3) {
                     const project = createListItem(projectIcon, text , () => { 
-                        console.log(currentValue)
+                        
                         sideMenuClickhandler(currentValue)
                     });
 
