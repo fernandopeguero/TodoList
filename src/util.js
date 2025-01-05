@@ -305,6 +305,8 @@ export  function screenController () {
                         date: dueDate.value
                     })
 
+                    filterProjects(sections.value);
+
                     displayContent();
                 }
 
@@ -429,11 +431,15 @@ export  function screenController () {
 
             addButton.addEventListener("click", function (event) {
                 
+                const currentValue = projectName.value
                 const text = projectName.value.trim();
                 const projectList = document.querySelector(".project_list");
 
                 if(text.length > 3) {
-                    const project = createListItem(projectIcon, text , () => { console.log("Adding Project")});
+                    const project = createListItem(projectIcon, text , () => { 
+                        console.log(currentValue)
+                        sideMenuClickhandler(currentValue)
+                    });
 
                     tasksController.addSection(text);
                     projectList.appendChild(project);
