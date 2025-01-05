@@ -55,6 +55,7 @@ body {
     color: var(--color-white);
     height: 100vh;
     display: flex;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .sidebar {
@@ -126,6 +127,7 @@ body {
 
     img {
       cursor: pointer;
+      
     }
   }
   
@@ -154,12 +156,13 @@ body {
     justify-content: space-between;
     padding: var(--pd-small) var(--pd-extra-large);
     border-radius: var(--pd-small);
-
+  
 
     p {
       flex:1 ;
       padding-left: var(--pd-medium);
       width: 100%;
+      font-weight: bolder;
     }
 
     img {
@@ -169,7 +172,8 @@ body {
 
   .completed {
     text-decoration: line-through;
-    background-color: green;
+    background-color: #123524;
+    
   }
 
   .todo_section, .completed_todo {
@@ -281,4 +285,9 @@ body {
     
   }
 
+}
+
+svg {
+
+  fill: white;
 }
