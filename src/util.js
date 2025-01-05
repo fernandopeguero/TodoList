@@ -202,6 +202,8 @@ export  function screenController () {
             list.classList.add("options");
             
             const addTask = createListItem(plusIcon, "Add task", () => {
+
+                    displayTaskModal();
                
                     const modal = document.querySelector(".task_modal_container");
     
@@ -219,6 +221,16 @@ export  function screenController () {
             
         }
 
+        // display taskModal 
+
+        function displayTaskModal() {
+
+            const modal = document.querySelector(".task_modal_container");
+            if(modal != null) modal.remove();
+
+            body.appendChild(createTaskModal());
+        }
+
         /* Add new task*/
 
         function createTaskModal() {
@@ -226,7 +238,7 @@ export  function screenController () {
             const container = document.createElement("section");
             container.classList.add("task_modal_container");
 
-            const card = document.createElement("div");
+            const card = document.createElement("form");
             card.classList.add("modal_card");
 
             const title = document.createElement("h3");
@@ -238,6 +250,7 @@ export  function screenController () {
             name.name = "name"
             name.id = "name";
             name.placeholder = "Name";
+            name.required = true;
 
             const sections = document.createElement("select");
             
@@ -268,12 +281,30 @@ export  function screenController () {
             addButton.type = "button";
             addButton.textContent = "Add Task";
 
+            addButton.addEventListener('click', function() {
+
+
+
+            })
+
             childAppender(card, title, name, sections, priorities, dueDate, addButton);
 
             childAppender(container, card)
 
             return container;
 
+        }
+
+        // create icon priority Icon 
+ 
+        function priorityIcon(image) {
+
+            const icon = document.createElement("svg");
+
+            const img = document.createElement("img");
+            img.src 
+
+            return icon
         }
 
         //  helper function to create option 
@@ -310,6 +341,8 @@ export  function screenController () {
             addIcon.src = plusIcon;
             
             addIcon.addEventListener("click", function (){
+                
+
                 const modal = document.querySelector(".modal_container");
 
                 modal.style.visibility = "visible";  
@@ -336,6 +369,11 @@ export  function screenController () {
 
 
         }
+
+        /*
+            Display Project Modal
+         */
+
 
         /*
             Create modal for project creation 
@@ -604,8 +642,10 @@ export  function screenController () {
         body.innerHTML = "";
         const content = document.createElement("section");
         content.classList.add("content_section");
+
+
         
-        childAppender(body, sidebar(), content, createProjectModal(), createTaskModal());
+        childAppender(body, sidebar(), content, createProjectModal());
         displayContent();
     }
         
