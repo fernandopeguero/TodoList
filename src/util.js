@@ -28,10 +28,10 @@ function createTasks()
     }
     
     const priorityLevels = {
-        low: 0,
-        normal: 1,
-        high: 2,
-        critical: 3
+        low: "#494CA2",
+        normal: "#6F975C",
+        high: "#D2D462",
+        critical: "#FF6361"
     }
 
     let tasks = [
@@ -39,34 +39,34 @@ function createTasks()
               name: "Finish App",
               section: "inbox",
               completed: false,
-              priority: 0,
+              priority: priorityLevels.low,
               date: new Date("2024-06-26")
             },
             {
               name: "Write Documentation",
               section: "today",
               completed: false,
-              priority: 0,
+              priority: priorityLevels.low,
               date: new Date("2024-06-27")
             },
             {
               name: "Grocery Shopping",
               section: "upcoming",
-              priority: 0,
+              priority: priorityLevels.low,
               completed: false,
               date: new Date("2024-06-28")
             },
             {
               name: "Prepare Presentation",
               section: "today",
-              priority: 0,
+              priority: priorityLevels.high,
               completed: false,
               date: new Date("2024-06-30")
             },
             {
               name: "Call Mom",
               section: "inbox",
-              priority: 0,
+              priority: priorityLevels.critical,
               completed: false,
               date: new Date("2024-07-01")
             }
@@ -170,12 +170,7 @@ export  function screenController () {
     const tasksController = createTasksController();
 
     
-    const priorityColor = {
-        low: "#494CA2",
-        normal: "#6F975C",
-        high: "#D2D462",
-        critical: "#FF6361"
-    }
+    const priorityColor = tasksController.getPrioritylevels();
 
     /*
         create object of the current projects sections inbox as default 
