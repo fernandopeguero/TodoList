@@ -238,8 +238,17 @@ export  function screenController () {
             const container = document.createElement("section");
             container.classList.add("task_modal_container");
 
+            container.addEventListener('click', function(e){
+                this.remove();
+            })
+
             const card = document.createElement("form");
             card.classList.add("modal_card");
+
+            card.addEventListener("click", function(e) {
+                e.stopPropagation();
+
+            })
 
             const title = document.createElement("h3");
             title.textContent = "Create Task";
