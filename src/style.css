@@ -162,6 +162,15 @@ body {
     justify-content: space-between;
     padding: var(--pd-small) var(--pd-extra-large);
     border-radius: var(--pd-small);
+
+    .priority_levels {
+      font-weight: bold;
+
+      option {
+        padding: var(--pd-small);
+        
+      }
+    }
   
 
     p {
