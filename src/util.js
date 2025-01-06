@@ -18,6 +18,13 @@ import upcomingIcon from "./Resources/svg/upcoming.svg";
 // projects icons
 import projectIcon from "./Resources/svg/project.svg";
 
+// priority flag icon 
+
+import lowFlag from "./Resources/svg/low_flag.svg";
+import normalFlag from "./Resources/svg/normal_flag.svg";
+import highFlag from "./Resources/svg/high_flag.svg";
+import criticalFlag from "./Resources/svg/critical_flag.svg";
+
 function createTasks() 
 {
 
@@ -172,6 +179,13 @@ export  function screenController () {
     
     const priorityColor = tasksController.getPrioritylevels();
 
+    const priorityIcons = {
+        low: lowFlag,
+        normal: normalFlag,
+        high: highFlag,
+        critical: criticalFlag
+    }
+
     /*
         create object of the current projects sections inbox as default 
     */
@@ -325,14 +339,16 @@ export  function screenController () {
 
         // create icon priority Icon 
  
-        function priorityIcon(image) {
+        function createPriorityIcon(priority) {
 
-            const icon = document.createElement("svg");
 
-            const img = document.createElement("img");
-            img.src 
+            const option = document.createElement("option");
+            option.value = priority;
+            option.textContent = priority
+            option.classList.add(priority)
+           
 
-            return icon
+            return option
         }
 
         //  helper function to create option 
@@ -637,7 +653,31 @@ export  function screenController () {
         
             const text = document.createElement("p");
             text.textContent = obj.name;
-            if(obj.completed) container.classList.add("completed");
+           
+
+            const select = document.createElement("select");
+            select.classList.add("priority_levels");
+
+                select.addEventListener('change', function(e) {
+                
+                    container.style.backgroundColor = priorityColor[this.value]
+                })
+           
+
+            
+            const optionsList = [];
+
+            for(const priority of Object.keys(priorityColor)){
+                optionsList.push(createPriorityIcon(priority));
+            }
+
+            if(obj.completed){ 
+                container.classList.add("completed");
+                select.disabled = true
+            }   
+
+
+            childAppender(select, ...optionsList)
         
             const deleteIcon = document.createElement("img");
             deleteIcon.src = trashIcon;
@@ -648,7 +688,7 @@ export  function screenController () {
 
             });
         
-            childAppender(container, checkbox, text, deleteIcon);
+            childAppender(container, checkbox, text, select, deleteIcon);
         
             return container;
         
