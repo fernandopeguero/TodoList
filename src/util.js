@@ -43,34 +43,34 @@ function createTasks() {
             name: "Finish App",
             section: "inbox",
             completed: false,
-            priority: priorityLevels.low,
+            priority: "low",
             date: new Date("2024-06-26"),
         },
         {
             name: "Write Documentation",
             section: "today",
             completed: false,
-            priority: priorityLevels.low,
+            priority: "low",
             date: new Date("2024-06-27"),
         },
         {
             name: "Grocery Shopping",
             section: "upcoming",
-            priority: priorityLevels.low,
+            priority: "low",
             completed: false,
             date: new Date("2024-06-28"),
         },
         {
             name: "Prepare Presentation",
             section: "today",
-            priority: priorityLevels.high,
+            priority: "high",
             completed: false,
             date: new Date("2024-06-30"),
         },
         {
             name: "Call Mom",
             section: "inbox",
-            priority: priorityLevels.critical,
+            priority: "critical",
             completed: false,
             date: new Date("2024-07-01"),
         },
@@ -576,7 +576,7 @@ export function screenController() {
         const container = document.createElement("li");
         container.classList.add("todo");
         if (!obj.completed) {
-            container.style.backgroundColor = obj.priority;
+            container.style.backgroundColor = priorityColor[obj.priority];
         }
 
         const checkbox = document.createElement("input");
@@ -594,15 +594,23 @@ export function screenController() {
         const select = document.createElement("select");
         select.classList.add("priority_levels");
 
-        select.addEventListener("click", function (e) {
+        select.addEventListener("change", function (e) {
             container.style.backgroundColor = priorityColor[this.value];
         });
 
         const optionsList = [];
 
         for (const priority of Object.keys(priorityColor)) {
-            optionsList.push(createPriorityIcon(priority));
+            const currentOption = createPriorityIcon(priority);
+
+            if (currentOption.value === obj.priority) {
+                currentOption.selected = true;
+            }
+
+            optionsList.push(currentOption);
         }
+
+        select.value = obj.priority;
 
         if (obj.completed) {
             container.classList.add("completed");
