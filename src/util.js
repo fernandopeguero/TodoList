@@ -65,14 +65,14 @@ function createTasks() {
             section: "today",
             priority: "high",
             completed: false,
-            date: new Date("2024-06-30"),
+            date: new Date("2025-01-10"),
         },
         {
             name: "Call Mom",
             section: "inbox",
             priority: "critical",
             completed: false,
-            date: new Date("2024-07-01"),
+            date: new Date("2028-07-01"),
         },
     ];
 
@@ -619,6 +619,9 @@ export function screenController() {
 
         childAppender(select, ...optionsList);
 
+        const date = document.createElement("h4");
+        date.textContent = `Due: ${checkDueDate(obj.date)}`;
+
         const deleteIcon = document.createElement("img");
         deleteIcon.src = trashIcon;
         deleteIcon.addEventListener("click", () => {
@@ -627,9 +630,41 @@ export function screenController() {
             displayContent();
         });
 
-        childAppender(container, checkbox, text, select, deleteIcon);
+        childAppender(container, checkbox, text, date, select, deleteIcon);
 
         return container;
+    }
+
+    function checkDueDate(date) {
+        if (isToday(date)) return "Today";
+        if (isTomorrow(date)) return "Tomorrow";
+
+        return date.toDateString();
+    }
+
+    function isTomorrow(date) {
+        // Get today's date
+        const today = new Date();
+
+        // Get tomorrow's date
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+
+        // Check if the given date matches tomorrow's date
+        return (
+            date.getDate() === tomorrow.getDate() &&
+            date.getMonth() === tomorrow.getMonth() &&
+            date.getFullYear() === tomorrow.getFullYear()
+        );
+    }
+
+    function isToday(date) {
+        const today = new Date();
+        return (
+            date.getDate() === today.getDate() &&
+            date.getMonth() === today.getMonth() &&
+            date.getFullYear() === today.getFullYear()
+        );
     }
 
     /* Creates priority level options */
