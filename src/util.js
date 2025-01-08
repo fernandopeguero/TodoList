@@ -637,10 +637,18 @@ export function screenController() {
     }
 
     function checkDueDate(date) {
+        if (isPastDue(date)) return "Overdue";
         if (isToday(date)) return "Today";
         if (isTomorrow(date)) return "Tomorrow";
 
         return date.toDateString();
+    }
+
+    function isPastDue(date) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        return date < today;
     }
 
     function isTomorrow(date) {
