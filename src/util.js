@@ -282,13 +282,14 @@ export function screenController() {
         addButton.addEventListener("click", function () {
             const modal = document.querySelector(".task_modal_container");
 
+            console.log(dueDate.value);
             if (name.value.length > 3 && name.value != "") {
                 tasksController.addTask({
                     name: name.value,
                     section: sections.value,
                     completed: false,
                     priority: options.value,
-                    date: dueDate.value,
+                    date: new Date(dueDate.value),
                 });
 
                 filterProjects(sections.value);
